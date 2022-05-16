@@ -1,0 +1,23 @@
+---
+
+- name: Install Zabbix on all hosts
+  hosts: all,!zabbix,!pve
+  become: true
+  tasks:
+    - name: Install Package
+      apt:
+        update_cache: yes
+        name: zabbix-agent
+        state: latest
+
+    - name: Set Server IP for Agent
+      shell: sed -i 's/Server=127.0.0.1/Server={{zabbix_host}}/' /etc/zabbix/zabbix_agentd.conf
+
+    - name: Set Hostname in Config
+      shell: sed -i 's/Hostname=Zabbix server/Hostname={{ inventory_hostname}}/' /etc/zabbix/zabbix_agentd.conf
+
+    - name: Restart Zabbix Agent
+      ansible.builtin.service:
+        name: zabbix-agent
+        state: restarted
+
