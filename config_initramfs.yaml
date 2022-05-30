@@ -1,0 +1,13 @@
+---
+
+- name: Configure initramfs to skip compression and make updates faster
+  hosts: vms
+  become: true
+  tasks:
+    - name: Switch initramfs.conf to "cat"
+      ansible.builtin.replace:
+        path: /etc/initramfs-tools/initramfs.conf
+        regexp: 'COMPRESS=.+'
+        replace: 'COMPRESS=cat'
+
+  
