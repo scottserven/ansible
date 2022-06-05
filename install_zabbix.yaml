@@ -1,7 +1,7 @@
 ---
 
 - name: Install Zabbix on all hosts
-  hosts: all,!zabbix,!pve
+  hosts: ubuntu
   become: true
   tasks:
     - name: Install Package

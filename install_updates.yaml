@@ -1,7 +1,7 @@
 ---
 
 - name: run apt-update on all nodes
-  hosts: vms
+  hosts: ubuntu
   become: true
   tasks:
     - name: apt update
